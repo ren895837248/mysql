@@ -64,7 +64,7 @@ RUN { \
 # don't reverse lookup hostnames, they are usually another container
 RUN sed -Ei 's/^(bind-address|log)/#&/' /etc/mysql/mysql.conf.d/mysqld.cnf \
 	&& echo '[mysqld]\nskip-host-cache\nskip-name-resolve' > /etc/mysql/conf.d/docker.cnf
-
+RUN sed -i '/\[mysqld\]/a server-id=1\nlog-bin' /etc/mysql/mysql.conf.d/mysqld.cnf
 VOLUME /var/lib/mysql
 
 COPY docker-entrypoint.sh /usr/local/bin/
